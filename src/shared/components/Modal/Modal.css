@@ -1,0 +1,31 @@
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(253, 253, 253);
+  box-shadow: 15px 17px 20px -12px;
+  padding: 1.5rem;
+  border: 1px solid rgb(250, 250, 250);
+  border-radius: 6px;
+  z-index: 999;
+  max-width: 80vw;
+  width: 100%;
+}
+
+.modal-backdrop {
+  z-index: 999;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: saturate(180%) blur(10px);
+}
+
+.footerClass {
+  text-align: right;
+}
+
+.modal__header {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
