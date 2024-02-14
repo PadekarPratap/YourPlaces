@@ -60,7 +60,7 @@
 }
 
 .header_class {
-  font-size: 15rem;
+  font-size: 1.25rem;
   color: red;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 }

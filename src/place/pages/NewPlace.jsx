@@ -2,6 +2,11 @@ import { useForm } from "react-hook-form";
 import Input from "../../shared/components/FormElements/Input";
 import "./NewPlace.css";
 import Button from "../../shared/components/FormElements/Button";
+import useCreatePlace from "../../hooks/place/useCreatePlace";
+import LoadingSpinner from "../../shared/components/LoadingSpinner";
+import ErrorModal from "../../shared/components/Modal/ErrorModal";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewPlace = () => {
   const { register, handleSubmit, formState } = useForm({
@@ -9,10 +14,47 @@ const NewPlace = () => {
   });
   const { errors } = formState;
 
-  const onSubmit = (data) => console.log(data);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { mutate, isPending, isError, error, isSuccess } = useCreatePlace();
+
+  const onSubmit = (data) => {
+    const { title, description, address } = data;
+    mutate({
+      title,
+      description,
+      address,
+      // temporary
+      creator: "65cbd0f5dd363b15548cc3b1",
+    });
+  };
+
+  useEffect(() => {
+    if (isError) {
+      setShowErrorModal(true);
+    }
+  }, [isError]);
+
+  if (isSuccess) {
+    navigate("/");
+  }
 
   return (
     <div>
+      {isPending && <LoadingSpinner asOverlay />}
+      {showErrorModal && (
+        <ErrorModal
+          closeModalState={() => setShowErrorModal(false)}
+          closeModal={
+            <Button big danger onClick={() => setShowErrorModal(false)}>
+              Close
+            </Button>
+          }
+          errorMessage={error.response.data.message}
+        />
+      )}
       <form className="place-form" onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="text"

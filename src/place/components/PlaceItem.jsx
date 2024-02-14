@@ -4,10 +4,15 @@ import "./PlaceItem.css";
 import Modal from "../../shared/components/Modal/Modal";
 import Map from "../../shared/components/Map/Map";
 import useAuth from "../../hooks/useAuth";
+import useDeletePlace from "../../hooks/place/useDeletePlace";
 
 const PlaceItem = ({ place }) => {
+  const { title, description, address, location, image, _id } = place;
+
   const [showMap, setShowMap] = useState(false);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
+
+  const { mutate, isPending } = useDeletePlace();
 
   const openMap = () => setShowMap(true);
   const closeMap = () => setShowMap(false);
@@ -17,7 +22,10 @@ const PlaceItem = ({ place }) => {
 
   const { isLoggedIn } = useAuth();
 
-  const { title, description, address, location, image, id } = place;
+  const deletePlace = () => {
+    mutate(_id);
+    closeWarning();
+  };
 
   return (
     <li className="place-item">
@@ -33,7 +41,7 @@ const PlaceItem = ({ place }) => {
         <Button inverse onClick={openMap}>
           View on Map
         </Button>
-        {isLoggedIn && <Button to={`/place/${id}`}>Edit</Button>}
+        {isLoggedIn && <Button to={`/place/${_id}`}>Edit</Button>}
         {isLoggedIn && (
           <Button danger onClick={openWarning}>
             Delete
@@ -68,8 +76,8 @@ const PlaceItem = ({ place }) => {
                 Cancel
               </Button>
               {/* writing the function to delete the item is remainig...  */}
-              <Button big danger>
-                Delete
+              <Button big danger onClick={deletePlace}>
+                {isPending ? <div className="loader" /> : "Delete"}
               </Button>
             </>
           }

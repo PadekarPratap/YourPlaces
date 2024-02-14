@@ -1,0 +1,9 @@
+.modal-content {
+  font-size: 25px;
+}
+
+.modal {
+  background-color: #303030;
+  color: white;
+  border: 1px solid #303030;
+}

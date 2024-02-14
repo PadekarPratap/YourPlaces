@@ -2,15 +2,28 @@ import { useForm } from "react-hook-form";
 import Card from "../../shared/components/Card";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useSignUp from "../../hooks/user/useSignUp";
+import ErrorModal from "../../shared/components/Modal/ErrorModal";
+import useLogin from "../../hooks/user/useLogin";
 
 const Auth = () => {
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const navigate = useNavigate();
+
+  const { mutate, isPending, isSuccess, isError, error } = useSignUp();
+  const {
+    mutate: mutateLogin,
+    isError: isLoginError,
+    isPending: isLoginPending,
+    error: loginError,
+    isSuccess: isLoginSuccess,
+  } = useLogin();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
 
@@ -22,13 +35,49 @@ const Auth = () => {
   };
 
   const onSubmit = (data) => {
-    login();
-    console.log(data);
-    navigate("/");
+    // login();
+    // console.log(data);
+    // navigate("/");
+
+    if (isLoginMode) {
+      mutateLogin({
+        email: data.email,
+        password: data.password,
+      });
+    } else {
+      const { username, email, password } = data;
+      mutate({
+        username,
+        email,
+        password,
+      });
+    }
   };
+
+  if (isSuccess || isLoginSuccess) {
+    login();
+    navigate("/");
+  }
+
+  useEffect(() => {
+    if (isError || isLoginError) setShowErrorModal(true);
+  }, [isError, isLoginError]);
 
   return (
     <>
+      {showErrorModal && (
+        <ErrorModal
+          errorMessage={
+            error?.response.data.message || loginError?.response.data.message
+          }
+          closeModal={
+            <Button onClick={() => setShowErrorModal(false)} big danger>
+              Close
+            </Button>
+          }
+          closeModalState={() => setShowErrorModal(false)}
+        />
+      )}
       <Card style={{ maxWidth: "40rem", margin: "auto" }}>
         <h2 className="center" style={{ fontSize: "3rem", margin: 0 }}>
           {isLoginMode ? "Login" : "Sign Up"}
@@ -95,7 +144,15 @@ const Auth = () => {
             isError={errors.password}
           />
 
-          <Button type="submit">{isLoginMode ? "Login" : "Sign up"}</Button>
+          <Button type="submit" disabled={isPending}>
+            {isPending || isLoginPending ? (
+              <div className="loader"></div>
+            ) : isLoginMode ? (
+              "Login"
+            ) : (
+              "Sign up"
+            )}
+          </Button>
         </form>
       </Card>
       <div className="center" style={{ marginTop: "3rem" }}>

@@ -8,6 +8,8 @@ import UpdatePlace from "./place/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
 import AuthProvider from "./shared/components/context/Auth-Context";
 import ProtectedRoutes from "./shared/components/ProtectedRoutes/ProtectedRoutes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ToastContainer />
         </main>
       </AuthProvider>
     </Router>
