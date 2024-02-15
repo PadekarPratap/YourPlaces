@@ -5,6 +5,7 @@ import Modal from "../../shared/components/Modal/Modal";
 import Map from "../../shared/components/Map/Map";
 import useAuth from "../../hooks/useAuth";
 import useDeletePlace from "../../hooks/place/useDeletePlace";
+import { SERVER } from "../../api/axios";
 
 const PlaceItem = ({ place }) => {
   const { title, description, address, location, image, _id } = place;
@@ -30,7 +31,7 @@ const PlaceItem = ({ place }) => {
   return (
     <li className="place-item">
       <div className="place-item__image">
-        <img src={image} alt={title} />
+        <img src={`${SERVER}/${image}`} alt={title} />
       </div>
       <div className="place-item__info">
         <h2>{title}</h2>

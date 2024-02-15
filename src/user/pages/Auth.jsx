@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import useSignUp from "../../hooks/user/useSignUp";
 import ErrorModal from "../../shared/components/Modal/ErrorModal";
 import useLogin from "../../hooks/user/useLogin";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const Auth = () => {
   const { register, handleSubmit, formState, reset } = useForm();
@@ -36,7 +37,6 @@ const Auth = () => {
 
   const onSubmit = (data) => {
     // login();
-    // console.log(data);
     // navigate("/");
 
     if (isLoginMode) {
@@ -45,30 +45,32 @@ const Auth = () => {
         password: data.password,
       });
     } else {
-      const { username, email, password } = data;
-      mutate({
-        username,
-        email,
-        password,
-      });
+      console.log(data);
+      const { username, email, password, image } = data;
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("image", image[0]);
+      mutate(formData);
     }
   };
 
-  if (isSuccess || isLoginSuccess) {
-    login();
-    navigate("/");
-  }
-
   useEffect(() => {
     if (isError || isLoginError) setShowErrorModal(true);
-  }, [isError, isLoginError]);
+    if (isSuccess || isLoginSuccess) {
+      login();
+      navigate("/");
+    }
+  }, [isError, isLoginError, isSuccess, isLoginSuccess, login, navigate]);
 
   return (
     <>
       {showErrorModal && (
         <ErrorModal
           errorMessage={
-            error?.response.data.message || loginError?.response.data.message
+            error?.response?.data?.message ||
+            loginError?.response?.data?.message
           }
           closeModal={
             <Button onClick={() => setShowErrorModal(false)} big danger>
@@ -84,6 +86,17 @@ const Auth = () => {
         </h2>
         <hr />
         <form onSubmit={handleSubmit(onSubmit)}>
+          {!isLoginMode && (
+            <ImageUpload
+              id="user-avatar"
+              imagePickerText="Pick Avatar"
+              register={register}
+              registerText="image"
+              isError={errors.image}
+              errorText={errors.image?.message}
+              validator={{ required: "Avatar is a required field!" }}
+            />
+          )}
           {!isLoginMode && (
             <Input
               element="input"

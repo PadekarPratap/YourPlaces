@@ -1,0 +1,15 @@
+.image-preview > * {
+  display: block;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.image-preview__image {
+  height: 130px;
+  width: 130px;
+  border: 1px solid gray;
+}
+
+.image__label {
+  cursor: pointer;
+}

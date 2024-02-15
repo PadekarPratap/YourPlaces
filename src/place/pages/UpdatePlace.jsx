@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import Input from "../../shared/components/FormElements/Input";
 import "./NewPlace.css";
 import Button from "../../shared/components/FormElements/Button";
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import LoadingSpinner from "../../shared/components/LoadingSpinner.jsx";
 import Card from "../../shared/components/Card";
 import useUpdatePlace from "../../hooks/place/useUpdatePlace.js";
@@ -15,7 +15,9 @@ const UpdatePlace = () => {
   const [error, setError] = useState(null);
   const [title, setTitle] = useState("");
 
-  const { mutate, isPending } = useUpdatePlace();
+  const navigate = useNavigate();
+
+  const { mutate, isPending, isSuccess } = useUpdatePlace();
 
   const { register, handleSubmit, formState } = useForm({
     defaultValues: async () => {
@@ -44,6 +46,10 @@ const UpdatePlace = () => {
 
     mutate({ values: { title, description }, placeId: placeId });
   };
+
+  useEffect(() => {
+    if (isSuccess) navigate(-1);
+  }, [isSuccess, navigate]);
 
   if (isLoading) return <LoadingSpinner asOverlay />;
 

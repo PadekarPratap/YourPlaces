@@ -7,6 +7,7 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import ErrorModal from "../../shared/components/Modal/ErrorModal";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewPlace = () => {
   const { register, handleSubmit, formState } = useForm({
@@ -22,24 +23,26 @@ const NewPlace = () => {
 
   const onSubmit = (data) => {
     const { title, description, address } = data;
-    mutate({
-      title,
-      description,
-      address,
-      // temporary
-      creator: "65cbd0f5dd363b15548cc3b1",
-    });
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("address", address);
+    // temporary
+    formData.append("creator", "65ce3214b45e470c7e03d979");
+    formData.append("image", data.image[0]);
+
+    mutate(formData);
   };
 
   useEffect(() => {
     if (isError) {
       setShowErrorModal(true);
     }
-  }, [isError]);
-
-  if (isSuccess) {
-    navigate("/");
-  }
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isError, isSuccess, navigate]);
 
   return (
     <div>
@@ -52,7 +55,7 @@ const NewPlace = () => {
               Close
             </Button>
           }
-          errorMessage={error.response.data.message}
+          errorMessage={error?.response?.data?.message}
         />
       )}
       <form className="place-form" onSubmit={handleSubmit(onSubmit)}>
@@ -105,6 +108,17 @@ const NewPlace = () => {
           }}
           isError={errors.address}
           errorText={errors.address?.message}
+        />
+
+        {/* image for the place  */}
+        <ImageUpload
+          id="place-image"
+          register={register}
+          registerText="image"
+          validator={{ required: "Image is required" }}
+          isError={errors.image}
+          errorText={errors.image?.message}
+          imagePickerText="Pick Place Image"
         />
 
         <Button
