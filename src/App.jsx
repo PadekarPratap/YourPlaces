@@ -6,10 +6,10 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import NewPlace from "./place/pages/NewPlace";
 import UpdatePlace from "./place/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
-import AuthProvider from "./shared/components/context/Auth-Context";
 import ProtectedRoutes from "./shared/components/ProtectedRoutes/ProtectedRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthProvider from "./shared/components/context/Auth-Context";
 
 const App = () => {
   return (

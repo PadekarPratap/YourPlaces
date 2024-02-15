@@ -3,15 +3,15 @@ import useAuth from "../../../hooks/useAuth";
 import { useEffect } from "react";
 
 const ProtectedRoutes = () => {
-  const { isLoggedIn } = useAuth();
+  const { userToken } = useAuth();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) navigate("/auth");
-  }, [isLoggedIn, navigate]);
+    if (!userToken) navigate("/auth");
+  }, [userToken, navigate]);
 
-  if (isLoggedIn) return <Outlet />;
+  if (userToken) return <Outlet />;
 };
 
 export default ProtectedRoutes;

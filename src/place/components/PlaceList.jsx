@@ -7,7 +7,7 @@ const PlaceList = ({ placeItemsList }) => {
     return (
       <div className="place-list center">
         No places found. Maybe create one to share with others?{" "}
-        <Link>Share Places</Link>
+        <Link to={`/place/new`}>Share Places</Link>
       </div>
     );
 

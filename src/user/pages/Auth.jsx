@@ -59,7 +59,7 @@ const Auth = () => {
   useEffect(() => {
     if (isError || isLoginError) setShowErrorModal(true);
     if (isSuccess || isLoginSuccess) {
-      login();
+      // login(); -> doing this in useLogin and useSignUp individually! So no need here
       navigate("/");
     }
   }, [isError, isLoginError, isSuccess, isLoginSuccess, login, navigate]);

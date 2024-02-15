@@ -5,9 +5,9 @@ import LoadingSpinner from "../../shared/components/LoadingSpinner";
 import Card from "../../shared/components/Card";
 
 const Places = () => {
-  // const { userId } = useParams();
+  const { userId } = useParams();
 
-  const userId = "65ce3214b45e470c7e03d979";
+  // const userId = "65ce3214b45e470c7e03d979";
 
   const { places, isError, isLoading, error } = usePlaceByUserId(userId);
 

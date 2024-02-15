@@ -5,7 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import Button from "../FormElements/Button";
 
 const NavLinks = ({ toogleDrawer }) => {
-  const { isLoggedIn, logout } = useAuth();
+  const { logout, userId, userToken } = useAuth();
 
   const navigate = useNavigate();
 
@@ -14,22 +14,22 @@ const NavLinks = ({ toogleDrawer }) => {
       <li onClick={toogleDrawer}>
         <NavLink to={"/"}>All Users</NavLink>
       </li>
-      {isLoggedIn && (
+      {userId && userToken && (
         <>
           <li onClick={toogleDrawer}>
-            <NavLink to={"/1/places"}>My Places</NavLink>
+            <NavLink to={`/${userId}/places`}>My Places</NavLink>
           </li>
           <li onClick={toogleDrawer}>
             <NavLink to={"/place/new"}>New Place</NavLink>
           </li>
         </>
       )}
-      {!isLoggedIn && (
+      {!userId && !userToken && (
         <li onClick={toogleDrawer}>
           <NavLink to={"/auth"}>Authenticate</NavLink>
         </li>
       )}
-      {isLoggedIn && (
+      {userId && userToken && (
         <li>
           <Button
             onClick={() => {
