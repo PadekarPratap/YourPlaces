@@ -6,7 +6,7 @@ const PlaceList = ({ placeItemsList }) => {
   if (placeItemsList.length === 0)
     return (
       <div className="place-list center">
-        No places found. Maybe create one to share with others?{" "}
+        No places found. Maybe create one to share with others?
         <Link to={`/place/new`}>Share Places</Link>
       </div>
     );
