@@ -8,7 +8,7 @@ const useCreatePlace = () => {
   const { mutate, isError, isPending, isSuccess, error } = useMutation({
     mutationFn: createPlace,
     onSuccess: () => {
-      queryClient.invalidateQueries({
+      queryClient.refetchQueries({
         queryKey: ["placeByUserId"],
       });
       toast.success("Place created successfully");
