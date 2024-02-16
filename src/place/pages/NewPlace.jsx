@@ -29,7 +29,6 @@ const NewPlace = () => {
     formData.append("description", description);
     formData.append("address", address);
     // temporary
-    formData.append("creator", "65ce3214b45e470c7e03d979");
     formData.append("image", data.image[0]);
 
     mutate(formData);

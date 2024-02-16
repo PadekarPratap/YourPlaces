@@ -6,11 +6,12 @@ const useUpdatePlace = () => {
   const { mutate, isError, error, isPending, isSuccess } = useMutation({
     mutationFn: ({ values, placeId }) => updatePlaceApi(values, placeId),
     onSuccess: () => toast.success("Place updated successfully"),
-    onError: (error) =>
-      toast.error(
-        error.response.data.Error[0].msg ||
-          "Something went wrong! Couldn't update the place. please try again"
-      ),
+    onError: (error) => {
+      console.log(error);
+      const err =
+        "Something went wrong! Couldn't update the place. please try again";
+      toast.error(err);
+    },
   });
 
   return { mutate, isError, error, isPending, isSuccess };

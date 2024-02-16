@@ -21,7 +21,7 @@ const PlaceItem = ({ place }) => {
   const openWarning = () => setShowDeleteWarning(true);
   const closeWarning = () => setShowDeleteWarning(false);
 
-  const { isLoggedIn } = useAuth();
+  const { userToken, userId } = useAuth();
 
   const deletePlace = () => {
     mutate(_id);
@@ -42,8 +42,8 @@ const PlaceItem = ({ place }) => {
         <Button inverse onClick={openMap}>
           View on Map
         </Button>
-        {isLoggedIn && <Button to={`/place/${_id}`}>Edit</Button>}
-        {isLoggedIn && (
+        {userId && userToken && <Button to={`/place/${_id}`}>Edit</Button>}
+        {userId && userToken && (
           <Button danger onClick={openWarning}>
             Delete
           </Button>
