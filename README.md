@@ -1,8 +1,48 @@
-# React + Vite
+<h1 align="center" id="title">YourPlaces</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p id="description">This is a MERN stack app designed to share places of your liking with other people</p>
 
-Currently, two official plugins are available:
+<h2>🚀 Demo</h2>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<!-- [Google.com](Google.com) -->
+
+<h2>🧐 Features</h2>
+
+Here're some of the project's best features:
+
+- Create an Account to use YourPlaces and share places with others
+- Discover other places to explore
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Clone the repository</p>
+
+```
+git clone *REPO_URL*
+```
+
+<p>2. Install the node modules</p>
+
+```
+npm i
+```
+
+<p>3. create a .env file in the root directory</p>
+
+<p>4. Add the following variables to the .env file</p>
+
+```
+VITE_SERVER
+```
+
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+- React
+- React-Router-DOM
+- React Hook Form
+- React Query
+- Nodejs
+- MongoDb
+- ExpressJs
