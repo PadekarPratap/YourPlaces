@@ -42,8 +42,10 @@ const PlaceItem = ({ place }) => {
         <Button inverse onClick={openMap}>
           View on Map
         </Button>
-        {userId && userToken && <Button to={`/place/${_id}`}>Edit</Button>}
-        {userId && userToken && (
+        {userId === place.creator && userToken && (
+          <Button to={`/place/${_id}`}>Edit</Button>
+        )}
+        {userId === place.creator && userToken && (
           <Button danger onClick={openWarning}>
             Delete
           </Button>
